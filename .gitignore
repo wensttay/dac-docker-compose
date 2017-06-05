@@ -1,4 +1,4 @@
 .DS_Store
-/target
+/app/target
+**/target
 nb-configuration.xml
-tomcat-users.xml
