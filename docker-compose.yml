@@ -1,16 +1,62 @@
-version: '2'
+# Docker-Compose Version, this version incluse a new method 
+# to make a run sequence of services using "healthcheck".
+version: '2.1'
+
+# Defining the default network (needs to be create before with
+# the command "docker network create simple-docker-cluster").
+networks:
+ default:
+  external:
+     name: nginx-proxy
+
+# Create/Use a volume for save postgres' informations .
+volumes:
+ postgres-volume-cliente:
+  driver: local
+
+# Creating the services
 services:
- postgres:
-  build: ./postgres
-  image: ricardojob/banco
-  container_name: banco
-  ports: 
-    - "5433:5432"
- web:
-  build: ./app
-  image: ricardojob/webapp
-  container_name: app
-  ports: 
-   - "8081:8080"
-  links: 
-   - "postgres:host-banco" 
+
+  # Service Nginx is responsable to make the cluster of services
+  # which have VIRTUAL_HOST environment variable defined.
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  # A simple JSE module view using the "wait-for-it.sh" to wait
+  # the finish of postgres' service execution.
+  jse:
+    build: ./jse
+    image: wensttay/jse
+    links:
+      - "postgres:host-banco"
+    command: ["/opt/app/wait-for-it.sh", "db:5432", "--", "/opt/app/start.sh"]
+  
+  # A Web Java Servlet module view using the "depends_on" and method
+  # to wait the finish of postgres' service execution with "healthcheck" defined.
+  web:
+    image: wensttay/web
+    build: ./web
+    depends_on:
+      postgres:
+        condition: service_healthy
+    links: 
+      - "postgres:host-banco"
+    environment:
+      - VIRTUAL_HOST=web.local
+
+  # A simple Postgres Container using the Volume "postgres-volume-cliente" and
+  # a "healthcheck".
+  postgres:
+    build: ./banco
+    image: wensttay/banco
+    container_name: banco
+    volumes:
+      - "postgres-volume-cliente:/var/lib/postresql/data/"
+    healthcheck:
+      test: "exit 0"
+

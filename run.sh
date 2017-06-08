@@ -1,7 +1,18 @@
-cd app && mvn clean install && cd ..
+#/bin/bash
 
-docker build -t ricardojob/banco ./postgres
-docker build -t ricardojob/webapp ./app
+# Clean and Install Shared, JSE and WEB projects
+mvn clean install
 
-docker run -p 5433:5432 --name banco -d ricardojob/banco  
-docker run -p 8081:8080 -d --name app --link banco:host-banco ricardojob/webapp
+# Creating a network used by docker-compose services
+sudo docker network create nginx-proxy
+
+# Build the docker-compose
+sudo docker-compose build
+
+# Start all the docker-compose services (the "-d" makes
+# the process on background, it can be take a time)
+sudo docker-compose up -d
+
+# Start 3 copys of WEB container in cluster (This method can be
+# change depending of docker-compose version which do use)
+sudo docker-compose scale web=3
