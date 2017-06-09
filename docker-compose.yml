@@ -47,7 +47,10 @@ services:
     links: 
       - "postgres:host-banco"
     environment:
-      - VIRTUAL_HOST=web.local
+      - VIRTUAL_HOST=localhost
+#      - VIRTUAL_HOST=web.local
+
+
 
   # A simple Postgres Container using the Volume "postgres-volume-cliente" and
   # a "healthcheck".
