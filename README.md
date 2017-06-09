@@ -17,7 +17,7 @@ For Others:
 Open the file "run.sh" and run each command on project root file:
 
 # Testing:
-With docker we can change the HOST's container, in this project I try change this to a personal Host "web.local" but to acess on Browser we need to change the request's HOST variable, to do this I use a Browser plugin. But if you only whant use the HOST "localhost" you don't need to do this, just follow this:
+With docker we can change the HOST's container, in this project I try change this to a personal HOST with names equals "web.local", but to acess on Browser we need to change the request's HOST variable, to do this I use a Browser plugin. But if you only whant use the HOST "localhost" you don't need to do this, just follow this first option:
 
  - With HOST ="localhost":
 
