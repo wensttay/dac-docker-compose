@@ -17,9 +17,9 @@ For Others:
 Open the file "run.sh" and run each command on project root file:
 
 # Testing:
-With docker we can change the HOST's container, in this project I try change this to a personal HOST with names equals "web.local", but to acess on Browser we need to change the request's HOST variable, to do this I use a Browser plugin. But if you only whant use the HOST "localhost" you don't need to do this, just follow this first option:
+With docker we can change the HOST's container, in this project I try change this to a personal VIRTUAL_HOST with names equals "web.local", but to acess on Browser we need to change the request's HOST variable, to do this I use a Browser plugin. But if you only whant use the VIRTUAL_HOST "localhost" you don't need to do this, just follow this first option:
 
- - With HOST ="localhost":
+ - With VIRTUAL_HOST ="localhost":
 
 	Open your Terminal and run this command:
 	```sh
@@ -29,7 +29,7 @@ With docker we can change the HOST's container, in this project I try change thi
 	To test on Browser, open It and entry in this URL: http://localhost/exemplo-primeira-aula/cliente
 	The result is a page with a text showing the HOST and a list with all clients in "banco" container.
 
- - With HOST ="web.local":
+ - With VIRTUAL_HOST ="web.local":
 
  	Entry in "docker-compose" file on root project file and switch the "VIRTUAL_HOST" enviroment (commenting/uncommenting the lines) in the service with name "web".
 
