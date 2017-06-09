@@ -23,7 +23,7 @@ With docker we can change the HOST's container, in this project I try change thi
 
 	Open your Terminal and run this command:
 	```sh
-	$ sh curl localhost/exemplo-primeira-aula/cliente
+	$ curl localhost/exemplo-primeira-aula/cliente
 	```
 
 	To test on Browser, open It and entry in this URL: http://localhost/exemplo-primeira-aula/cliente
@@ -35,7 +35,7 @@ With docker we can change the HOST's container, in this project I try change thi
 
 	Open your Terminal and run this command:
 	```sh
-	$ sh curl "Host: web.local" localhost/exemplo-primeira-aula/cliente
+	$ curl "Host: web.local" localhost/exemplo-primeira-aula/cliente
 	```
 	
 	To test on Browser, open It, configure your plugin to change the "Host" to "web.local" and entry in this URL: http://localhost/exemplo-primeira-aula/cliente (remember this is a kludge).
